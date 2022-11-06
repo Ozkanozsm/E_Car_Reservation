@@ -2,24 +2,19 @@ import { useState } from "react";
 import { Text, View, TextInput, StyleSheet, Button } from "react-native";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuthStore } from "../utils/authStates";
 
 function LoginScreen() {
+  const authstore = useAuthStore();
   const [privateKey, setPrivateKey] = useState("");
 
   const userPrivateKeySubmit = () => {
-    console.log(privateKey);
     AsyncStorage.setItem("privateKey", privateKey);
+    authstore.savePrivateKey(privateKey);
   };
 
-  const GetPKey = async () => {
-    try {
-      const value = await AsyncStorage.getItem("privateKey");
-      if (value !== null) {
-        console.log(value);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+  const GetPKey = () => {
+    console.log(authstore.privateKey);
   };
 
   return (
