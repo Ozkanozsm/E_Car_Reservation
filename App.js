@@ -6,6 +6,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StyleSheet, Text, View } from "react-native";
 import UserScreen from "./screens/UserScreen";
 import { useAuthStore } from "./utils/authStates";
+const Web3 = require("web3");
+import "./global";
 
 const Stack = createNativeStackNavigator();
 
