@@ -5,6 +5,7 @@ import walletShortener from "../utils/walletshortener";
 import { useUserDataStore } from "../utils/userDataStates";
 const Web3 = require("web3");
 import axios from "axios";
+import { useEffect, useState } from "react";
 function UserScreen({ navigation }) {
   const web3 = new Web3("http://192.168.0.12:7545");
   const willSendAddress = "0xEf7B941E03032AC004c449Cf86fA32C6c65659d5";
@@ -12,6 +13,11 @@ function UserScreen({ navigation }) {
   const txdata = web3.utils.utf8ToHex("HI FROM RNATIVE");
   const authstore = useAuthStore();
   const userDataStore = useUserDataStore();
+  const [balance, setBalance] = useState(0);
+
+  useEffect(() => {
+    getBalance();
+  }, []);
   const logout = () => {
     console.log("logout");
     AsyncStorage.removeItem("privateKey");
@@ -55,6 +61,19 @@ function UserScreen({ navigation }) {
     console.log("asdşklASDKL");
   };
 
+  const getBalance = async () => {
+    try {
+      const req = await axios.post("http://192.168.0.12:3000/user/balance", {
+        address: authstore.address,
+      });
+      const balance = req.data.balance;
+      console.log(balance);
+      setBalance(balance);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const RefreshData = async () => {
     console.log("refresh");
     const urlToRequest =
@@ -72,15 +91,33 @@ function UserScreen({ navigation }) {
         <Button title="Logout" onPress={logout} />
       </Pressable>
       <View style={styles.wallet}>
-        <Text>Address: {walletShortener(authstore.address)}</Text>
+        <Text>Address: {authstore.address}</Text>
       </View>
       <Text>ID: {userDataStore.id}</Text>
-      <Text>Total Cancelled: {userDataStore.total_cancelled}</Text>
-      <Text>Total Completed: {userDataStore.total_completed}</Text>
-      <Text>Total Spent: {userDataStore.total_spent}</Text>
-      <Pressable>
+
+      <View style={styles.userDetails}>
+        <View style={styles.userDetail}>
+          <Text>Total Cancelled</Text>
+          <Text>{userDataStore.total_cancelled}</Text>
+        </View>
+        <View style={styles.userDetail}>
+          <Text>Total Completed</Text>
+          <Text>{userDataStore.total_completed}</Text>
+        </View>
+        <View style={styles.userDetail}>
+          <Text>Total Spent</Text>
+          <Text>{userDataStore.total_spent}</Text>
+        </View>
+      </View>
+      <Pressable style={styles.button}>
         <Button title="Refresh" onPress={RefreshData} />
       </Pressable>
+      <Pressable style={styles.button}>
+        <Button title="Balance" onPress={getBalance} />
+      </Pressable>
+      <Text>
+        Balance: {web3.utils.fromWei(balance.toString(), "ether")} ETH
+      </Text>
     </View>
   );
 }
@@ -97,6 +134,26 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    marginVertical: 10,
+  },
+  userDetails: {
+    flexDirection: "row",
+    marginHorizontal: 20,
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+  },
+  userDetail: {
+    borderWidth: 2,
+    borderColor: "#FFA500",
+    borderRadius: 5,
+    padding: 5,
+    marginHorizontal: 5,
+    backgroundColor: "#fff",
+    alignItems: "center",
   },
 });
 
