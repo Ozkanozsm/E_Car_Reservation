@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   userView: {
     alignItems: "center",
     justifyContent: "center",
+    padding: 10,
   },
   stationView: {
     alignItems: "center",

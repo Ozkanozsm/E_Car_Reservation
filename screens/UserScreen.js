@@ -74,6 +74,10 @@ function UserScreen({ navigation }) {
     }
   };
 
+  const makeReservation = () => {
+    navigation.navigate("Stations");
+  };
+
   const RefreshData = async () => {
     console.log("refresh");
     const urlToRequest =
@@ -114,6 +118,9 @@ function UserScreen({ navigation }) {
       </Pressable>
       <Pressable style={styles.button}>
         <Button title="Balance" onPress={getBalance} />
+      </Pressable>
+      <Pressable style={styles.button}>
+        <Button title="Make Reservation" onPress={makeReservation} />
       </Pressable>
       <Text>
         Balance: {web3.utils.fromWei(balance.toString(), "ether")} ETH
