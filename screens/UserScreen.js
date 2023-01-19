@@ -16,7 +16,10 @@ function UserScreen({ navigation }) {
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {
-    getBalance();
+    const balanceGetter = async () => {
+      await getBalance();
+    };
+    balanceGetter();
   }, []);
   const logout = () => {
     console.log("logout");
@@ -62,12 +65,14 @@ function UserScreen({ navigation }) {
   };
 
   const getBalance = async () => {
+    const pkey = await AsyncStorage.getItem("privateKey");
+    const address = await web3.eth.accounts.privateKeyToAccount(pkey).address;
+    console.log(address);
     try {
-      const req = await axios.post("http://192.168.0.12:3000/user/balance", {
-        address: authstore.address,
+      const req = await axios.post("http://192.168.0.12:3000/wallet/balance", {
+        address: address,
       });
       const balance = req.data.balance;
-      console.log(balance);
       setBalance(balance);
     } catch (err) {
       console.log(err);
@@ -122,9 +127,7 @@ function UserScreen({ navigation }) {
       <Pressable style={styles.button}>
         <Button title="Make Reservation" onPress={makeReservation} />
       </Pressable>
-      <Text>
-        Balance: {web3.utils.fromWei(balance.toString(), "ether")} ETH
-      </Text>
+      <Text>Balance: {balance} ETH</Text>
     </View>
   );
 }

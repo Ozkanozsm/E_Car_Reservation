@@ -18,13 +18,14 @@ function LoginScreen() {
     try {
       const address = web3.eth.accounts.privateKeyToAccount(privateKey);
       console.log(address);
-      await AsyncStorage.setItem("privateKey", privateKey);
 
       const res = await axios.post("http://192.168.0.12:3000/user/register", {
         signature: web3.eth.accounts.sign(registerMessage, privateKey)
           .signature,
         address: address.address,
       });
+      await AsyncStorage.setItem("privateKey", privateKey);
+      console.log(res.data);
       authStore.savePrivateKey(privateKey);
       authStore.setAddress(address.address);
       userDataStore.setId(res.data.id);

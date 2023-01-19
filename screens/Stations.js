@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 
 function StationsScreen({ navigation }) {
   const [stationList, setStationList] = useState("");
+  const [loading, setLoading] = useState(true);
+
   const getStations = async () => {
     console.log("getStations");
     const response = await axios.get("http://192.168.0.12:3000/station/list");
@@ -23,6 +25,14 @@ function StationsScreen({ navigation }) {
     console.log(data);
     setStationList(data);
   };
+
+  useEffect(() => {
+    const stationGetter = async () => {
+      await getStations();
+      setLoading(false);
+    };
+    stationGetter();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -33,7 +43,7 @@ function StationsScreen({ navigation }) {
           getStations();
         }}
       />
-      {stationList && (
+      {stationList ? (
         <FlatList
           data={stationList}
           keyExtractor={(item) => item.id}
@@ -46,6 +56,8 @@ function StationsScreen({ navigation }) {
             );
           }}
         />
+      ) : (
+        <Text>Loading...</Text>
       )}
     </View>
   );
