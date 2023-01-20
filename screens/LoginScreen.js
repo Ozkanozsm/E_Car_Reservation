@@ -4,7 +4,7 @@ import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuthStore } from "../utils/authStates";
 import Web3 from "web3";
-import { registerMessage } from "../utils/constants";
+import { backendurl, registerMessage } from "../utils/constants";
 import axios from "axios";
 import { useUserDataStore } from "../utils/userDataStates";
 
@@ -19,7 +19,7 @@ function LoginScreen() {
       const address = web3.eth.accounts.privateKeyToAccount(privateKey);
       console.log(address);
 
-      const res = await axios.post("http://192.168.0.12:3000/user/register", {
+      const res = await axios.post(`${backendurl}/user/register`, {
         signature: web3.eth.accounts.sign(registerMessage, privateKey)
           .signature,
         address: address.address,

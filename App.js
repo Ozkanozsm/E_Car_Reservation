@@ -8,7 +8,10 @@ import UserScreen from "./screens/UserScreen";
 import { useAuthStore } from "./utils/authStates";
 const Web3 = require("web3");
 import "./global";
-import StationsScreen from "./screens/Stations";
+import StationsScreen from "./screens/StationListScreen";
+import MakeReservationScreen from "./screens/MakeReservationScreen";
+import MyReservationsScreen from "./screens/MyReservationsScreen";
+import MadeReservationScreen from "./screens/MadeReservationScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +28,9 @@ function AuthenticatedStack() {
     <Stack.Navigator>
       <Stack.Screen name="UserScreen" component={UserScreen} />
       <Stack.Screen name="Stations" component={StationsScreen} />
+      <Stack.Screen name="MakeReservation" component={MakeReservationScreen} />
+      <Stack.Screen name="MyReservations" component={MyReservationsScreen} />
+      <Stack.Screen name="MadeReservation" component={MadeReservationScreen} />
     </Stack.Navigator>
   );
 }

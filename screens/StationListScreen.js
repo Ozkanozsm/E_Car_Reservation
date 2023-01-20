@@ -13,6 +13,7 @@ import { useUserDataStore } from "../utils/userDataStates";
 const Web3 = require("web3");
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { backendurl } from "../utils/constants";
 
 function StationsScreen({ navigation }) {
   const [stationList, setStationList] = useState("");
@@ -20,7 +21,7 @@ function StationsScreen({ navigation }) {
 
   const getStations = async () => {
     console.log("getStations");
-    const response = await axios.get("http://192.168.0.12:3000/station/list");
+    const response = await axios.get(`${backendurl}/station/list`);
     const data = response.data;
     console.log(data);
     setStationList(data);
@@ -36,22 +37,37 @@ function StationsScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>Stations</Text>
-      <Button
-        title="Get Stations"
-        onPress={() => {
-          getStations();
-        }}
-      />
+      <View style={styles.button}>
+        <Button
+          title="Refresh Stations"
+          onPress={() => {
+            getStations();
+          }}
+        />
+      </View>
       {stationList ? (
         <FlatList
+          style={{ width: "80%" }}
           data={stationList}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(station) => station.id}
           renderItem={({ item }) => {
             return (
-              <View>
-                <Text>{item.name}</Text>
-                <Text>{item.address}</Text>
+              <View style={styles.stationItem}>
+                <Pressable
+                  onPress={() => {
+                    console.log(item);
+                    navigation.navigate("MakeReservation", {
+                      station: item,
+                    });
+                  }}
+                >
+                  <Text>{item.name}</Text>
+                  <Text>{item.address}</Text>
+                  <Text>
+                    Price Range :
+                    {" " + item.pricing[0].price + "-" + item.pricing[1].price}
+                  </Text>
+                </Pressable>
               </View>
             );
           }}
@@ -70,16 +86,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  wallet: {
-    marginHorizontal: 20,
+  stationItem: {
+    marginVertical: 10,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    borderColor: "#FFA500",
+    borderWidth: 2,
   },
+
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
-    marginVertical: 10,
+    marginTop: 10,
   },
   userDetails: {
     flexDirection: "row",
