@@ -109,7 +109,7 @@ function MakeReservationScreen({ route, navigation }) {
     const result = await sendForContract(serializedReservationTx);
     setResStatus("reservation contract call sent, waiting for confirmation");
     const restxhash = result.receipt.transactionHash;
-    await new Promise((resolve) => setTimeout(resolve, 10000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     const priceres = await getPriceOfReservation(restxhash);
     const price = priceres.value;
     const rawPriceTx = {

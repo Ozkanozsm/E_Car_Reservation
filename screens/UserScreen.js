@@ -58,6 +58,7 @@ function UserScreen({ navigation }) {
     userDataStore.setTotalCancelled(res.data.total_cancelled);
     userDataStore.setTotalCompleted(res.data.total_completed);
     userDataStore.setTotalSpent(res.data.total_spent);
+    userDataStore.setTotalMade(res.data.total_reservation);
   };
 
   return (
@@ -72,15 +73,19 @@ function UserScreen({ navigation }) {
 
       <View style={styles.userDetails}>
         <View style={styles.userDetail}>
-          <Text>Total Cancelled</Text>
+          <Text>All</Text>
+          <Text>{userDataStore.total_made}</Text>
+        </View>
+        <View style={styles.userDetail}>
+          <Text>Cancelled</Text>
           <Text>{userDataStore.total_cancelled}</Text>
         </View>
         <View style={styles.userDetail}>
-          <Text>Total Completed</Text>
+          <Text>Completed</Text>
           <Text>{userDataStore.total_completed}</Text>
         </View>
         <View style={styles.userDetail}>
-          <Text>Total Spent</Text>
+          <Text>Spent</Text>
           <Text>{userDataStore.total_spent}</Text>
         </View>
       </View>

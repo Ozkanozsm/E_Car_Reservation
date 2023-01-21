@@ -100,6 +100,7 @@ function MadeReservationScreen({ route, navigation }) {
       },
       body: JSON.stringify(data),
     });
+    console.log("a");
     const json = await result.json();
     console.log(json);
     Alert.alert("", "Reservation Succesfully Completed");

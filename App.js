@@ -12,13 +12,25 @@ import StationsScreen from "./screens/userscreens/StationListScreen";
 import MakeReservationScreen from "./screens/userscreens/MakeReservationScreen";
 import MyReservationsScreen from "./screens/userscreens/MyReservationsScreen";
 import MadeReservationScreen from "./screens/userscreens/MadeReservationScreen";
-
+import StationLoginScreen from "./screens/stationscreens/StationLoginScreen";
+import StationDetailsScreen from "./screens/stationscreens/StationDetailsScreen";
+import StationChangePriceScreen from "./screens/stationscreens/StationChangePriceScreen";
 const Stack = createNativeStackNavigator();
 
 function AuthStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function StationStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="StationLoginScreen" component={StationLoginScreen} />
+      <Stack.Screen name="StationDetailsScreen" component={StationDetailsScreen} />
+      <Stack.Screen name="StationChangeprice" component={StationChangePriceScreen} />
     </Stack.Navigator>
   );
 }
@@ -39,6 +51,7 @@ function Navigation() {
   const [isLoading, setIsLoading] = useState(true);
   const authstore = useAuthStore();
   const privateKey = authstore.privateKey;
+  const isStationLogin = authstore.isStation;
   useEffect(() => {
     const getLocalData = async () => {
       let data = await AsyncStorage.getItem("privateKey");
@@ -59,7 +72,13 @@ function Navigation() {
 
   return (
     <NavigationContainer>
-      {privateKey ? <AuthenticatedStack /> : <AuthStack />}
+      {isStationLogin ? (
+        <StationStack />
+      ) : privateKey ? (
+        <AuthenticatedStack />
+      ) : (
+        <AuthStack />
+      )}
     </NavigationContainer>
   );
 }

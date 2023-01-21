@@ -15,4 +15,8 @@ export const useAuthStore = create((set) => ({
     set({ privateKey: null });
     AsyncStorage.removeItem("privateKey");
   },
+  isStation: false,
+  setIsStation: (isStation) => {
+    set({ isStation });
+  },
 }));

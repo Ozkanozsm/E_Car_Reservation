@@ -12,6 +12,7 @@ function LoginScreen() {
   const authStore = useAuthStore();
   const userDataStore = useUserDataStore();
   const [privateKey, setPrivateKey] = useState("");
+  const [stationKey, setStationKey] = useState("");
   const web3 = new Web3();
 
   const userPrivateKeySubmit = async () => {
@@ -40,6 +41,10 @@ function LoginScreen() {
     }
   };
 
+  const stationLogin = () => {
+    authStore.setIsStation(true);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.userView}>
@@ -57,7 +62,12 @@ function LoginScreen() {
       </View>
       <View style={styles.stationView}>
         <Text>Station Login</Text>
-        <TextInput placeholder="Private Key" />
+        <Button
+          title="Login"
+          onPress={() => {
+            stationLogin();
+          }}
+        />
       </View>
     </View>
   );
