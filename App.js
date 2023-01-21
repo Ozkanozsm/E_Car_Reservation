@@ -8,10 +8,10 @@ import UserScreen from "./screens/UserScreen";
 import { useAuthStore } from "./utils/authStates";
 const Web3 = require("web3");
 import "./global";
-import StationsScreen from "./screens/StationListScreen";
-import MakeReservationScreen from "./screens/MakeReservationScreen";
-import MyReservationsScreen from "./screens/MyReservationsScreen";
-import MadeReservationScreen from "./screens/MadeReservationScreen";
+import StationsScreen from "./screens/userscreens/StationListScreen";
+import MakeReservationScreen from "./screens/userscreens/MakeReservationScreen";
+import MyReservationsScreen from "./screens/userscreens/MyReservationsScreen";
+import MadeReservationScreen from "./screens/userscreens/MadeReservationScreen";
 
 const Stack = createNativeStackNavigator();
 

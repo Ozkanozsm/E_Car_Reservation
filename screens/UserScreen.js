@@ -1,7 +1,6 @@
 import { Text, View, StyleSheet, Pressable, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuthStore } from "../utils/authStates";
-import walletShortener from "../utils/walletshortener";
 import { useUserDataStore } from "../utils/userDataStates";
 const Web3 = require("web3");
 import axios from "axios";

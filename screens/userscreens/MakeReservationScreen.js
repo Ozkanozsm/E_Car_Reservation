@@ -1,20 +1,9 @@
-import {
-  Text,
-  View,
-  StyleSheet,
-  Pressable,
-  Button,
-  FlatList,
-} from "react-native";
+import { Text, View, StyleSheet, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useAuthStore } from "../utils/authStates";
-import walletShortener from "../utils/walletshortener";
-import { useUserDataStore } from "../utils/userDataStates";
 const Web3 = require("web3");
-import axios from "axios";
 import { useEffect, useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { backendurl, web3url } from "../utils/constants";
+import { backendurl, web3url } from "../../utils/constants";
 
 function MakeReservationScreen({ route, navigation }) {
   const { station } = route.params;

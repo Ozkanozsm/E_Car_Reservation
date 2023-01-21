@@ -6,14 +6,11 @@ import {
   Button,
   FlatList,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useAuthStore } from "../utils/authStates";
-import walletShortener from "../utils/walletshortener";
-import { useUserDataStore } from "../utils/userDataStates";
+
 const Web3 = require("web3");
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { backendurl } from "../utils/constants";
+import { backendurl } from "../../utils/constants";
 
 function StationsScreen({ navigation }) {
   const [stationList, setStationList] = useState("");
