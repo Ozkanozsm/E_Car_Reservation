@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet, Button, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const Web3 = require("web3");
 import { useEffect, useState } from "react";
@@ -13,8 +13,32 @@ function MakeReservationScreen({ route, navigation }) {
   const [durationMinutes, setDurationMinutes] = useState(15);
   const [selectedEpoch, setSelectedEpoch] = useState();
   const [resStatus, setResStatus] = useState();
-
+  const [stationAvailable, setStationAvailable] = useState(false);
   let myAccount;
+
+  const checkAvailability = async () => {
+    const durationepoch = durationMinutes * 60;
+    const data = {
+      stationId: station.id,
+      startDate: selectedEpoch,
+      duration: durationepoch,
+    };
+    console.log(data);
+    const res = await fetch(`${backendurl}/reservation/check`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const resdata = await res.json();
+    console.log(resdata);
+    Alert.alert(
+      "Station is",
+      resdata.available ? "Available" : "Not Available"
+    );
+    setStationAvailable(resdata.available);
+  };
 
   const getContractAll = async () => {
     const required = await fetch(backendurl + "/contract/all");
@@ -142,7 +166,9 @@ function MakeReservationScreen({ route, navigation }) {
     hideDatePicker();
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(station);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -186,6 +212,12 @@ function MakeReservationScreen({ route, navigation }) {
           if (durationMinutes > 15) {
             setDurationMinutes(durationMinutes - 15);
           }
+        }}
+      />
+      <Button
+        title="check availability"
+        onPress={async () => {
+          await checkAvailability();
         }}
       />
 

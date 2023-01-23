@@ -12,7 +12,6 @@ function LoginScreen() {
   const authStore = useAuthStore();
   const userDataStore = useUserDataStore();
   const [privateKey, setPrivateKey] = useState("");
-  const [stationKey, setStationKey] = useState("");
   const web3 = new Web3();
 
   const userPrivateKeySubmit = async () => {
@@ -48,10 +47,12 @@ function LoginScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.userView}>
-        <Text>User Login</Text>
+        <Text style={styles.logintext}>User Login</Text>
         <TextInput
+          style={styles.marginbot}
           placeholder="Private Key"
           value={privateKey}
+          secureTextEntry={true}
           onChangeText={(text) => setPrivateKey(text)}
         />
         <View style={styles.pressables}>
@@ -61,7 +62,7 @@ function LoginScreen() {
         </View>
       </View>
       <View style={styles.stationView}>
-        <Text>Station Login</Text>
+        <Text style={styles.logintext}>Station Login</Text>
         <Button
           title="Login"
           onPress={() => {
@@ -78,12 +79,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+  },
+  marginbot: {
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  logintext: {
+    fontSize: 20,
+    marginBottom: 10,
   },
   userView: {
     alignItems: "center",
     justifyContent: "center",
     padding: 10,
+    marginTop: 150,
+    marginBottom: 70,
   },
   stationView: {
     alignItems: "center",
