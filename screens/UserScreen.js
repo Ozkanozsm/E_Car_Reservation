@@ -1,4 +1,11 @@
-import { Text, View, StyleSheet, Pressable, Button } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuthStore } from "../utils/authStates";
 import { useUserDataStore } from "../utils/userDataStates";
@@ -6,6 +13,7 @@ const Web3 = require("web3");
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { backendurl, web3url } from "../utils/constants";
+
 function UserScreen({ navigation }) {
   const web3 = new Web3(web3url);
 
@@ -63,81 +71,124 @@ function UserScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Pressable>
-        <Button title="Logout" onPress={logout} />
-      </Pressable>
-      <View style={styles.wallet}>
-        <Text>Address: {address}</Text>
-      </View>
-      <Text>ID: {userDataStore.id}</Text>
+      <View>
+        <View style={styles.wallet}>
+          <Text style={styles.bold}>Balance: {balance} ETH</Text>
+        </View>
 
-      <View style={styles.userDetails}>
-        <View style={styles.userDetail}>
-          <Text>All</Text>
-          <Text>{userDataStore.total_made}</Text>
+        <View style={styles.userDetails}>
+          <View style={styles.userDetail}>
+            <Text>All</Text>
+            <Text>{userDataStore.total_made}</Text>
+          </View>
+          <View style={styles.userDetail}>
+            <Text>Cancelled</Text>
+            <Text>{userDataStore.total_cancelled}</Text>
+          </View>
+          <View style={styles.userDetail}>
+            <Text>Completed</Text>
+            <Text>{userDataStore.total_completed}</Text>
+          </View>
+          <View style={styles.userDetail}>
+            <Text>Spent</Text>
+            <Text>{userDataStore.total_spent}</Text>
+          </View>
         </View>
-        <View style={styles.userDetail}>
-          <Text>Cancelled</Text>
-          <Text>{userDataStore.total_cancelled}</Text>
+        <View style={styles.btngroup}>
+          <Pressable style={styles.button}>
+            <Button title="Refresh" onPress={RefreshData} color="#a83254" />
+          </Pressable>
+          <Pressable style={styles.button}>
+            <Button title="Balance" onPress={getBalance} color="#a83254" />
+          </Pressable>
         </View>
-        <View style={styles.userDetail}>
-          <Text>Completed</Text>
-          <Text>{userDataStore.total_completed}</Text>
-        </View>
-        <View style={styles.userDetail}>
-          <Text>Spent</Text>
-          <Text>{userDataStore.total_spent}</Text>
+        <View style={styles.btngroup2}>
+          <Pressable style={styles.button2}>
+            <Button
+              title="Make Reservation"
+              onPress={makeReservation}
+              color="#a83254"
+            />
+          </Pressable>
+          <Pressable style={styles.button2}>
+            <Button
+              title="My Reservations"
+              onPress={MyReservations}
+              color="#a83254"
+            />
+          </Pressable>
         </View>
       </View>
-      <Pressable style={styles.button}>
-        <Button title="Refresh" onPress={RefreshData} />
-      </Pressable>
-      <Pressable style={styles.button}>
-        <Button title="Balance" onPress={getBalance} />
-      </Pressable>
-      <Pressable style={styles.button}>
-        <Button title="Make Reservation" onPress={makeReservation} />
-      </Pressable>
-      <Pressable style={styles.button}>
-        <Button title="My Reservations" onPress={MyReservations} />
-      </Pressable>
-      <Text>Balance: {balance} ETH</Text>
+      <TouchableOpacity onPress={logout} style={styles.bottom}>
+        <Text>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  bottom: {
+    alignItems: "center",
+    width: 200,
+    backgroundColor: "#bcbcbc",
+    elevation: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+  },
+  button2: {
+    alignItems: "center",
+    marginHorizontal: 5,
+  },
+  btngroup2: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  btngroup: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  bold: {
+    textAlign: "center",
+    fontSize: 20,
+    marginBottom: 20,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
   wallet: {
     marginHorizontal: 20,
     backgroundColor: "#fff",
-    alignItems: "center",
     justifyContent: "center",
+    marginTop: 20,
   },
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
     marginVertical: 10,
+    marginHorizontal: 20,
   },
   userDetails: {
     flexDirection: "row",
     marginHorizontal: 20,
     backgroundColor: "#fff",
     justifyContent: "flex-start",
+    justifyContent: "center",
   },
   userDetail: {
     borderWidth: 2,
-    borderColor: "#FFA500",
-    borderRadius: 5,
+    borderColor: "#a83254",
+    borderRadius: 20,
     padding: 5,
     marginHorizontal: 5,
     backgroundColor: "#fff",
     alignItems: "center",
+    width: 85,
   },
 });
 

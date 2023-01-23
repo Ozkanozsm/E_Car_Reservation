@@ -34,17 +34,9 @@ function StationsScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.button}>
-        <Button
-          title="Refresh Stations"
-          onPress={() => {
-            getStations();
-          }}
-        />
-      </View>
       {stationList ? (
         <FlatList
-          style={{ width: "80%" }}
+          style={{ width: "80%",marginTop: 20 }}
           data={stationList}
           keyExtractor={(station) => station.id}
           renderItem={({ item }) => {
@@ -88,8 +80,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "#FFA500",
+    borderColor: "#a83254",
     borderWidth: 2,
+    borderRadius: 15,
   },
 
   button: {

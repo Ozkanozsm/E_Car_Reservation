@@ -57,7 +57,11 @@ function LoginScreen() {
         />
         <View style={styles.pressables}>
           <Pressable>
-            <Button title="Login" onPress={userPrivateKeySubmit} />
+            <Button
+              color={"#a83254"}
+              title="Login"
+              onPress={userPrivateKeySubmit}
+            />
           </Pressable>
         </View>
       </View>
@@ -65,6 +69,7 @@ function LoginScreen() {
         <Text style={styles.logintext}>Station Login</Text>
         <Button
           title="Login"
+          color={"#a83254"}
           onPress={() => {
             stationLogin();
           }}

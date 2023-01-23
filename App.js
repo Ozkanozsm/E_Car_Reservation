@@ -20,7 +20,20 @@ const Stack = createNativeStackNavigator();
 function AuthStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{
+          title: "Login Screen",
+          headerStyle: {
+            backgroundColor: "#a83254",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -29,8 +42,14 @@ function StationStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="StationLoginScreen" component={StationLoginScreen} />
-      <Stack.Screen name="StationDetailsScreen" component={StationDetailsScreen} />
-      <Stack.Screen name="StationChangeprice" component={StationChangePriceScreen} />
+      <Stack.Screen
+        name="StationDetailsScreen"
+        component={StationDetailsScreen}
+      />
+      <Stack.Screen
+        name="StationChangeprice"
+        component={StationChangePriceScreen}
+      />
     </Stack.Navigator>
   );
 }
@@ -38,8 +57,34 @@ function StationStack() {
 function AuthenticatedStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="UserScreen" component={UserScreen} />
-      <Stack.Screen name="Stations" component={StationsScreen} />
+      <Stack.Screen
+        name="UserScreen"
+        component={UserScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: "#a83254",
+          },
+          title: "User Screen",
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Stations"
+        component={StationsScreen}
+        options={{
+          title: "Stations",
+          headerStyle: {
+            backgroundColor: "#a83254",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
       <Stack.Screen name="MakeReservation" component={MakeReservationScreen} />
       <Stack.Screen name="MyReservations" component={MyReservationsScreen} />
       <Stack.Screen name="MadeReservation" component={MadeReservationScreen} />
