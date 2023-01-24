@@ -7,13 +7,13 @@ import { backendurl, web3url } from "../../utils/constants";
 
 function MakeReservationScreen({ route, navigation }) {
   const { station } = route.params;
-  const [loading, setLoading] = useState(true);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState();
   const [durationMinutes, setDurationMinutes] = useState(15);
   const [selectedEpoch, setSelectedEpoch] = useState();
   const [resStatus, setResStatus] = useState();
   const [stationAvailable, setStationAvailable] = useState(false);
+  const [estimatedPrice, setEstimatedPrice] = useState(0);
   let myAccount;
 
   const checkAvailability = async () => {
@@ -33,11 +33,20 @@ function MakeReservationScreen({ route, navigation }) {
     });
     const resdata = await res.json();
     console.log(resdata);
-    Alert.alert(
-      "Station is",
-      resdata.available ? "Available" : "Not Available"
-    );
-    setStationAvailable(resdata.available);
+    const tempavailable = resdata.available === 1 ? true : false;
+    let tempMessage;
+    if (tempavailable) {
+      tempMessage = "Station is available";
+    } else {
+      tempMessage = "Station is not available";
+    }
+    Alert.alert(tempMessage, resdata.message);
+    console.log(tempavailable);
+    if (tempavailable) {
+      setEstimatedPrice(resdata.price);
+      console.log(resdata.price);
+    }
+    setStationAvailable(tempavailable);
   };
 
   const getContractAll = async () => {
@@ -163,6 +172,7 @@ function MakeReservationScreen({ route, navigation }) {
   const handleConfirm = (date) => {
     setSelectedDate(date);
     setSelectedEpoch(date.getTime() / 1000);
+    setStationAvailable(false);
     hideDatePicker();
   };
 
@@ -201,45 +211,93 @@ function MakeReservationScreen({ route, navigation }) {
         />
       </View>
 
-      {selectedDate && <Text> {selectedDate.toString().substr(0, 24)}</Text>}
+      {selectedDate && (
+        <View>
+          <Text style={styles.center}>
+            {selectedDate.toString().substr(0, 24)}
+          </Text>
+          <Text style={styles.center}>{durationMinutes} Mins</Text>
+          <View style={styles.btngroup}>
+            <View style={styles.padyatay}>
+              <Button
+                color="#a83254"
+                title="-15"
+                onPress={() => {
+                  if (durationMinutes > 15) {
+                    setDurationMinutes(durationMinutes - 15);
+                    setStationAvailable(false);
+                  }
+                }}
+              />
+            </View>
+            <View style={styles.padyatay}>
+              <Button
+                color="#a83254"
+                title="+15"
+                onPress={() => {
+                  setDurationMinutes(durationMinutes + 15);
+                  setStationAvailable(false);
+                }}
+              />
+            </View>
+          </View>
+          <View style={styles.padyataybuyuk}>
+            <Button
+              title="check availability"
+              color="#a83254"
+              onPress={async () => {
+                await checkAvailability();
+              }}
+            />
+          </View>
+        </View>
+      )}
 
-      <Text>{durationMinutes}</Text>
-      <Button
-        title="+15"
-        onPress={() => {
-          setDurationMinutes(durationMinutes + 15);
-        }}
-      />
-      <Button
-        title="-15"
-        onPress={() => {
-          if (durationMinutes > 15) {
-            setDurationMinutes(durationMinutes - 15);
-          }
-        }}
-      />
-      <Button
-        title="check availability"
-        onPress={async () => {
-          await checkAvailability();
-        }}
-      />
-
-      <Button
-        title="Make Reservation"
-        onPress={() => {
-          makeReservation();
-        }}
-      />
+      {stationAvailable && (
+        <View>
+          <Text style={styles.centerbold}>
+            Estimated Price: {estimatedPrice}
+          </Text>
+          <Button
+            color="#a83254"
+            title="Make Reservation"
+            onPress={() => {
+              makeReservation();
+              setStationAvailable(false);
+            }}
+          />
+        </View>
+      )}
       <Text>{resStatus}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  centerbold: {
+    textAlign: "center",
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  padyatay: {
+    padding: 5,
+  },
+  padyataybuyuk: {
+    marginHorizontal: 50,
+    marginTop: 10,
+  },
+  btngroup: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  center: {
+    textAlign: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   pricing: {
     alignItems: "center",

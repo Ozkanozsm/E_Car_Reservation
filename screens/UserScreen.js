@@ -25,6 +25,9 @@ function UserScreen({ navigation }) {
   useEffect(() => {
     const balanceGetter = async () => {
       await getBalance();
+      //wait 1 second
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await RefreshData();
     };
     balanceGetter();
   }, []);
