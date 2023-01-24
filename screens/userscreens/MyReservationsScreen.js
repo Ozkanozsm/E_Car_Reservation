@@ -1,4 +1,11 @@
-import { Text, View, StyleSheet, Pressable, FlatList } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+  FlatList,
+  Button,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Web3 = require("web3");
@@ -41,9 +48,16 @@ function MyReservationsScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.mtop}>
+        <Button
+          title="Refresh"
+          color={"#a83254"}
+          onPress={reservationsGetter}
+        />
+      </View>
       {reservations && (
         <FlatList
-          style={{ width: "80%", marginTop: 20 }}
+          style={{ width: "80%", marginTop: 10 }}
           data={reservations}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
@@ -69,10 +83,7 @@ function MyReservationsScreen({ navigation }) {
                 </Text>
                 <Text>
                   Reservation Start Time:{" "}
-                  {
-                    //item.start_time is epoch time, convert to local time
-                    new Date(item.start_time * 1000).toLocaleString()
-                  }
+                  {new Date(item.start_time * 1000).toLocaleString()}
                 </Text>
                 <Text>{item.duration / 60} minutes</Text>
               </View>
@@ -85,6 +96,9 @@ function MyReservationsScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  mtop: {
+    marginTop: 10,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",

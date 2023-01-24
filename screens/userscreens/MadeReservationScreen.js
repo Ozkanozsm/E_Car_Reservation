@@ -130,10 +130,7 @@ function MadeReservationScreen({ route, navigation }) {
         {new Date(reservation.start_time * 1000).toLocaleString()}
       </Text>
       <Text>{reservation.duration / 60} minutes</Text>
-      <Text>Create Tx: {reservation.create_tx}</Text>
-      <Text>Bill Tx: {reservation.bill_tx}</Text>
-      <Text>Cancel Tx: {reservation.cancel_tx}</Text>
-      <Text>Complete Tx: {reservation.complete_tx}</Text>
+
       {reservation.status == statusResPaid ? (
         <View>
           <View style={styles.button}>
@@ -142,6 +139,8 @@ function MadeReservationScreen({ route, navigation }) {
               title="Cancel Reservation"
               onPress={async () => {
                 await cancelRes();
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                navigation.goBack();
               }}
             />
           </View>
@@ -149,13 +148,63 @@ function MadeReservationScreen({ route, navigation }) {
             <Button
               color={"#243ab5"}
               title="Complete Reservation"
-              onPress={() => {
-                completeRes();
+              onPress={async () => {
+                await completeRes();
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                navigation.goBack();
               }}
             />
           </View>
         </View>
       ) : null}
+      <Button
+        title="Details"
+        color={"#a83254"}
+        onPress={() => {
+          const resid = reservation.id;
+          const reserver = reservation.reserver_wallet_addr;
+          const reserved = reservation.reserved_wallet_addr;
+          const value = reservation.value;
+          const reservedAt = new Date(
+            reservation.reserved_time
+          ).toLocaleString();
+          const startTime = new Date(
+            reservation.start_time * 1000
+          ).toLocaleString();
+          const duration = reservation.duration / 60 + " minutes";
+          const create_tx = reservation.create_tx;
+          const bill_tx = reservation.bill_tx;
+          const cancel_tx = reservation.cancel_tx;
+          const complete_tx = reservation.complete_tx;
+
+          const alltext = [
+            { title: "Reservation ID", text: resid },
+            { title: "Reserver Addr", text: reserver },
+            { title: "Reserved Station Addr", text: reserved },
+            { title: "Price", text: value },
+            { title: "Reserved At", text: reservedAt },
+            { title: "Reservation Start", text: startTime },
+            { title: "Reservation Duration", text: duration },
+            { title: "Create Tx", text: create_tx },
+            { title: "Bill Tx", text: bill_tx },
+            { title: "Cancel Tx", text: cancel_tx },
+            { title: "Complete Tx", text: complete_tx },
+          ];
+
+          const textToDisplay = alltext
+            .map((item) => {
+              return item.title + ": " + item.text;
+            })
+            .join("\n");
+
+          Alert.alert(
+            "Details",
+            textToDisplay,
+            [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+            { cancelable: false }
+          );
+        }}
+      />
     </View>
   );
 }
