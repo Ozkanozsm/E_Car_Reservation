@@ -85,9 +85,48 @@ function AuthenticatedStack() {
           },
         }}
       />
-      <Stack.Screen name="MakeReservation" component={MakeReservationScreen} />
-      <Stack.Screen name="MyReservations" component={MyReservationsScreen} />
-      <Stack.Screen name="MadeReservation" component={MadeReservationScreen} />
+      <Stack.Screen
+        name="MakeReservation"
+        component={MakeReservationScreen}
+        options={{
+          title: "Make Reservation",
+          headerStyle: {
+            backgroundColor: "#a83254",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="MyReservations"
+        component={MyReservationsScreen}
+        options={{
+          title: "My Reservations",
+          headerStyle: {
+            backgroundColor: "#a83254",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="MadeReservation"
+        component={MadeReservationScreen}
+        options={{
+          title: "Made Reservation",
+          headerStyle: {
+            backgroundColor: "#a83254",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }

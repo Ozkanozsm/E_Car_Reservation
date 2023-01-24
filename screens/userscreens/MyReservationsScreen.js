@@ -43,7 +43,7 @@ function MyReservationsScreen({ navigation }) {
     <View style={styles.container}>
       {reservations && (
         <FlatList
-          style={{ width: "80%" }}
+          style={{ width: "80%", marginTop: 20 }}
           data={reservations}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
@@ -100,8 +100,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: "#fff",
     padding: 10,
-    borderColor: "#ccc",
+    borderColor: "#a83254",
     borderWidth: 1,
+    borderRadius: 15,
   },
 });
 

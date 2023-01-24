@@ -187,7 +187,11 @@ function MakeReservationScreen({ route, navigation }) {
         </Text>
       </View>
       <View>
-        <Button title="Show Date Picker" onPress={showDatePicker} />
+        <Button
+          title="Select Date and Time"
+          onPress={showDatePicker}
+          color="#a83254"
+        />
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="datetime"
@@ -236,8 +240,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
   pricing: {
     alignItems: "center",

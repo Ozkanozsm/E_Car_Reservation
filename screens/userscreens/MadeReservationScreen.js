@@ -138,7 +138,7 @@ function MadeReservationScreen({ route, navigation }) {
         <View>
           <View style={styles.button}>
             <Button
-              color={"red"}
+              color={"#de2c2c"}
               title="Cancel Reservation"
               onPress={async () => {
                 await cancelRes();
@@ -147,6 +147,7 @@ function MadeReservationScreen({ route, navigation }) {
           </View>
           <View style={styles.button}>
             <Button
+              color={"#243ab5"}
               title="Complete Reservation"
               onPress={() => {
                 completeRes();
