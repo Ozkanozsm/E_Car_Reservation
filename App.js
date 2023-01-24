@@ -15,6 +15,7 @@ import MadeReservationScreen from "./screens/userscreens/MadeReservationScreen";
 import StationLoginScreen from "./screens/stationscreens/StationLoginScreen";
 import StationDetailsScreen from "./screens/stationscreens/StationDetailsScreen";
 import StationChangePriceScreen from "./screens/stationscreens/StationChangePriceScreen";
+import StationInfo from "./screens/stationscreens/StationInfoScreen";
 const Stack = createNativeStackNavigator();
 
 function AuthStack() {
@@ -24,7 +25,7 @@ function AuthStack() {
         name="LoginScreen"
         component={LoginScreen}
         options={{
-          title: "Login Screen",
+          title: "Login",
           headerStyle: {
             backgroundColor: "#a83254",
           },
@@ -41,14 +42,61 @@ function AuthStack() {
 function StationStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="StationLoginScreen" component={StationLoginScreen} />
+      <Stack.Screen
+        name="StationLoginScreen"
+        component={StationLoginScreen}
+        options={{
+          title: "Station Login",
+          headerStyle: {
+            backgroundColor: "#a83254",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
       <Stack.Screen
         name="StationDetailsScreen"
         component={StationDetailsScreen}
+        options={{
+          title: "Station Details",
+          headerStyle: {
+            backgroundColor: "#a83254",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
       />
       <Stack.Screen
         name="StationChangeprice"
         component={StationChangePriceScreen}
+        options={{
+          title: "Change Price",
+          headerStyle: {
+            backgroundColor: "#a83254",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="StationInfo"
+        component={StationInfo}
+        options={{
+          title: "Station Info",
+          headerStyle: {
+            backgroundColor: "#a83254",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
       />
     </Stack.Navigator>
   );
@@ -64,7 +112,7 @@ function AuthenticatedStack() {
           headerStyle: {
             backgroundColor: "#a83254",
           },
-          title: "User Screen",
+          title: "User",
           headerTintColor: "#fff",
           headerTitleStyle: {
             fontWeight: "bold",

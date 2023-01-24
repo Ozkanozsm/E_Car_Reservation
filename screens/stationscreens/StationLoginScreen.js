@@ -29,7 +29,17 @@ function StationLoginScreen({ navigation }) {
       />
       <Button
         title="Change price"
-        onPress={() => navigation.navigate("StationChangeprice")}
+        onPress={async () => {
+          await AsyncStorage.setItem("stationKey", stationKey);
+          navigation.navigate("StationChangeprice");
+        }}
+      />
+      <Button
+        title="Information"
+        onPress={async () => {
+          await AsyncStorage.setItem("stationKey", stationKey);
+          navigation.navigate("StationInfo");
+        }}
       />
 
       <Button title="Exit" onPress={() => authStore.setIsStation(false)} />

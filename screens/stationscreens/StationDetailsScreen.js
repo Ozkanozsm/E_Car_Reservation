@@ -91,7 +91,7 @@ function StationDetailsScreen({ navigation }) {
       <TextInput placeholder="start2" value={start2} onChangeText={setStart2} />
       <TextInput placeholder="end2" value={end2} onChangeText={setEnd2} />
       <Button
-        title="LOG"
+        title="Register"
         onPress={async () => {
           await sendDetails();
         }}
