@@ -34,8 +34,8 @@ function StationInfo({ navigation }) {
     if (response.status == 400) {
       setIsRegistered(false);
     } else {
-      setIsRegistered(true);
       setInfo(json.stationInfo);
+      setIsRegistered(true);
       console.log(json.stationInfo.pricing);
       console.log(json.stationInfo.pricing[0].price);
     }
@@ -66,6 +66,24 @@ function StationInfo({ navigation }) {
               {info.pricing[1].price} ETH
             </Text>
           </View>
+          <View style={styles.userDetails}>
+            <View style={styles.userDetail}>
+              <Text>All</Text>
+              <Text>{info.total_reserved}</Text>
+            </View>
+            <View style={styles.userDetail}>
+              <Text>Cancelled</Text>
+              <Text>{info.total_cancelled}</Text>
+            </View>
+            <View style={styles.userDetail}>
+              <Text>Completed</Text>
+              <Text>{info.total_completed}</Text>
+            </View>
+            <View style={styles.userDetail}>
+              <Text>Earned</Text>
+              <Text>{info.total_earned}</Text>
+            </View>
+          </View>
         </View>
       ) : (
         <Text>Not Registered Yet</Text>
@@ -80,6 +98,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     justifyContent: "center",
     padding: 50,
+  },
+  userDetails: {
+    flexDirection: "row",
+    marginHorizontal: 20,
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+    justifyContent: "center",
+  },
+  userDetail: {
+    borderWidth: 2,
+    borderColor: "#a83254",
+    borderRadius: 20,
+    padding: 5,
+    marginHorizontal: 5,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    width: 85,
   },
 });
 
