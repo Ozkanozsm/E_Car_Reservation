@@ -48,6 +48,7 @@ function StationChangePriceScreen({ navigation }) {
       body: JSON.stringify(data),
     });
     const json = await fetchli.json();
+    Alert.alert("", "Price change succesful");
     console.log(json);
   };
 
@@ -61,6 +62,7 @@ function StationChangePriceScreen({ navigation }) {
       <TextInput placeholder="End 2" onChangeText={setEnd2} />
 
       <Button
+        color="#a83254"
         title="CHANGE PRICE"
         onPress={async () => {
           await sendPriceChange();

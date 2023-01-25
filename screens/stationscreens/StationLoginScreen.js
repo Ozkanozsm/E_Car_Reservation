@@ -21,33 +21,51 @@ function StationLoginScreen({ navigation }) {
         onChangeText={setStationKey}
         placeholder="Station Private Key"
       />
-      <Button
-        title="Register Station"
-        onPress={() => {
-          registerStation();
-        }}
-      />
-      <Button
-        title="Change price"
-        onPress={async () => {
-          await AsyncStorage.setItem("stationKey", stationKey);
-          navigation.navigate("StationChangeprice");
-        }}
-      />
-      <Button
-        title="Information"
-        onPress={async () => {
-          await AsyncStorage.setItem("stationKey", stationKey);
-          navigation.navigate("StationInfo");
-        }}
-      />
+      <View style={styles.margver}>
+        <Button
+          color="#a83254"
+          title="Register Station"
+          onPress={() => {
+            registerStation();
+          }}
+        />
+      </View>
+      <View style={styles.margver}>
+        <Button
+          title="Change price"
+          color="#a83254"
+          onPress={async () => {
+            await AsyncStorage.setItem("stationKey", stationKey);
+            navigation.navigate("StationChangeprice");
+          }}
+        />
+      </View>
 
-      <Button title="Exit" onPress={() => authStore.setIsStation(false)} />
+      <View style={styles.margver}>
+        <Button
+          title="Information"
+          color="#a83254"
+          onPress={async () => {
+            await AsyncStorage.setItem("stationKey", stationKey);
+            navigation.navigate("StationInfo");
+          }}
+        />
+      </View>
+      <View style={styles.margver}>
+        <Button
+          title="Exit"
+          onPress={() => authStore.setIsStation(false)}
+          color="#a83254"
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  margver: {
+    marginVertical: 10,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
